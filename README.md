@@ -36,7 +36,7 @@ Install once, use in all your projects:
 
 ```bash
 # Clone to your personal skills folder
-git clone https://github.com/YOUR_USERNAME/reflect-yourself ~/.cursor/skills/reflect-yourself
+git clone https://github.com/maorfsdev/reflect-yourself ~/.cursor/skills/reflect-yourself
 ```
 
 ### Option 2: Project Installation
@@ -45,7 +45,7 @@ Add to a specific project:
 
 ```bash
 # From your project root
-git clone https://github.com/YOUR_USERNAME/reflect-yourself .cursor/reflect-yourself-pkg
+git clone https://github.com/maorfsdev/reflect-yourself .cursor/reflect-yourself-pkg
 
 # Copy the files
 cp -r .cursor/reflect-yourself-pkg/commands/* .cursor/commands/
@@ -56,7 +56,19 @@ cp .cursor/reflect-yourself-pkg/reflect-queue.json .cursor/
 rm -rf .cursor/reflect-yourself-pkg
 ```
 
-### Option 3: Manual Installation
+### Option 3: Using the Installer
+
+After cloning, run the interactive installer:
+
+```bash
+# macOS/Linux
+./install.sh
+
+# Windows PowerShell
+.\install.ps1
+```
+
+### Option 4: Manual Installation
 
 1. Download/clone this repository
 2. Copy the contents to your project's `.cursor/` folder or `~/.cursor/skills/`
@@ -125,9 +137,12 @@ reflect-yourself/
 │   └── reflect-yourself-skip.md      # Clear queue
 ├── rules/
 │   └── session-reflect.mdc           # Always-on reminder rule
-├── reflect-queue.json                # Queue storage
+├── reflect-queue.json                # Queue storage template
+├── install.sh                        # Installer for macOS/Linux
+├── install.ps1                       # Installer for Windows
 ├── README.md
-└── LICENSE
+├── LICENSE
+└── .gitignore
 ```
 
 ## Usage
