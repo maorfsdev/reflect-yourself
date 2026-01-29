@@ -144,6 +144,13 @@ Which learnings should I apply? (e.g., "1,2" or "all" or "1 with edit")
 
 ### Phase 6: Apply Learnings
 
+**Path Safety:** Only write to these locations:
+- `.cursor/skills/` (project)
+- `.cursor/rules/` (project)
+- `~/.cursor/skills/` (personal)
+
+Never write outside `.cursor/` directories.
+
 For approved learnings:
 
 1. **New Skill Creation:**
@@ -152,6 +159,7 @@ For approved learnings:
    - Use third-person descriptions with trigger terms
 
 2. **Skill Updates:**
+   - **Backup first:** Show the user the current content before modifying
    - Read existing skill file
    - Add learning to appropriate section
    - Maintain skill structure and conciseness
@@ -227,6 +235,10 @@ Should I generate these skills? (yes/no/select)
 Learnings can be queued for later processing:
 
 **Queue file:** `.cursor/reflect-queue.json`
+
+**Limits:**
+- Maximum 50 pending learnings (older ones should be processed or discarded)
+- Warn user if queue has items older than 7 days
 
 ```json
 {

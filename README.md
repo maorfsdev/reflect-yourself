@@ -169,6 +169,13 @@ The `session-reflect.mdc` rule provides gentle reminders:
 
 **Key difference:** Cursor doesn't have Claude Code's hook system, so you trigger `/reflect-yourself` manually. The rule file reminds you at natural stopping points.
 
+## Safety
+
+- **Human review required** - All learnings require your approval before being applied
+- **Scoped writes** - Only writes to `.cursor/` directories (project or personal)
+- **Backup shown** - Before modifying existing skills, you'll see the current content
+- **Undo via git** - All changes are in your repo, use `git checkout` to restore if needed
+
 ## Tips
 
 1. **Use explicit markers** for important learnings:
