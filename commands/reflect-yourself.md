@@ -234,7 +234,7 @@ Should I generate these skills? (yes/no/select)
 
 Learnings can be queued for later processing:
 
-**Queue file:** `.cursor/reflect-queue.json`
+**Queue file:** `~/.cursor/reflect-queue.json` (global location, never pollutes project repos)
 
 **Limits:**
 - Maximum 50 pending learnings (older ones should be processed or discarded)
@@ -272,7 +272,7 @@ When running /reflect-yourself:
 | Project Skills | `.cursor/skills/` | This repo only |
 | Personal Skills | `~/.cursor/skills/` | All your projects |
 | Project Rules | `.cursor/rules/` | This repo only |
-| Queue | `.cursor/reflect-queue.json` | Pending learnings |
+| Queue | `~/.cursor/reflect-queue.json` | Pending learnings (global) |
 | Built-in Skills | `~/.cursor/skills-cursor/` | **DO NOT MODIFY** |
 
 ---

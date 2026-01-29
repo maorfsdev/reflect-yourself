@@ -6,7 +6,7 @@ View the queue of captured learnings without processing them.
 
 ## Instructions for Agent
 
-1. Read the queue file at `.cursor/reflect-queue.json`
+1. Read the queue file at `~/.cursor/reflect-queue.json` (global location)
 2. If the file doesn't exist or is empty, report "No pending learnings"
 3. Display learnings in a formatted table:
 

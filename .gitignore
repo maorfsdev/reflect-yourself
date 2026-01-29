@@ -7,5 +7,8 @@ Thumbs.db
 *.swo
 *~
 
-# Don't ignore the queue template, but users might want to ignore their own
-# reflect-queue.json
+# Node
+node_modules/
+
+# Local Cursor installation (this is the source repo)
+.cursor/

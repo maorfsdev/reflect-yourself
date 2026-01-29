@@ -33,4 +33,4 @@ When corrected while using an existing skill:
 
 ## Queue Location
 
-Learnings queue: `.cursor/reflect-queue.json`
+Learnings queue: `~/.cursor/reflect-queue.json` (global)

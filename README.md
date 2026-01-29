@@ -38,48 +38,46 @@ Automatically determines where learnings should go:
 
 ## Installation
 
-### Option 1: Personal Skill (Recommended)
+Installs globally to `~/.cursor/skills-cursor/` - available in all your projects, invisible to git.
 
-Install once, use in all your projects:
+### Quick Install (One-liner)
 
+**macOS/Linux:**
 ```bash
-# Clone to your personal skills folder
-git clone https://github.com/maorfsdev/reflect-yourself ~/.cursor/skills/reflect-yourself
+curl -fsSL https://raw.githubusercontent.com/AshkanAhmady/reflect-yourself/main/install.sh | bash
 ```
 
-### Option 2: Project Installation
-
-Add to a specific project:
-
-```bash
-# From your project root
-git clone https://github.com/maorfsdev/reflect-yourself .cursor/reflect-yourself-pkg
-
-# Copy the files
-cp -r .cursor/reflect-yourself-pkg/commands/* .cursor/commands/
-cp -r .cursor/reflect-yourself-pkg/rules/* .cursor/rules/
-cp .cursor/reflect-yourself-pkg/reflect-queue.json .cursor/
-
-# Clean up
-rm -rf .cursor/reflect-yourself-pkg
+**Windows PowerShell:**
+```powershell
+iwr -useb https://raw.githubusercontent.com/AshkanAhmady/reflect-yourself/main/install.ps1 | iex
 ```
 
-### Option 3: Using the Installer
+### Alternative Methods
 
-After cloning, run the interactive installer:
+**npm/npx:**
+```bash
+npx reflect-yourself-install
+```
+
+**Git clone:**
+```bash
+git clone https://github.com/AshkanAhmady/reflect-yourself ~/.cursor/skills-cursor/reflect-yourself
+```
+
+**Manual download:**
+1. Download ZIP from [GitHub releases](https://github.com/AshkanAhmady/reflect-yourself/releases)
+2. Extract to `~/.cursor/skills-cursor/reflect-yourself/`
+3. Done - the skill is now available in all projects
+
+### Uninstall
 
 ```bash
 # macOS/Linux
-./install.sh
+rm -rf ~/.cursor/skills-cursor/reflect-yourself ~/.cursor/reflect-queue.json
 
 # Windows PowerShell
-.\install.ps1
+Remove-Item -Recurse -Force "$env:USERPROFILE\.cursor\skills-cursor\reflect-yourself", "$env:USERPROFILE\.cursor\reflect-queue.json"
 ```
-
-### Option 4: Manual Installation
-
-1. Download/clone this repository
-2. Copy the contents to your project's `.cursor/` folder or `~/.cursor/skills/`
 
 ## Commands
 
@@ -137,7 +135,7 @@ You: "No, check network tab first"
 
 ```
 reflect-yourself/
-├── SKILL.md                    # Skill manifest (for personal installation)
+├── SKILL.md                          # Skill manifest
 ├── commands/
 │   ├── reflect-yourself.md           # Main reflection command
 │   ├── reflect-yourself-skills.md    # Skill discovery
@@ -145,12 +143,17 @@ reflect-yourself/
 │   └── reflect-yourself-skip.md      # Clear queue
 ├── rules/
 │   └── session-reflect.mdc           # Always-on reminder rule
-├── reflect-queue.json                # Queue storage template
+├── bin/
+│   └── install.js                    # npm/npx installer
+├── package.json                      # npm package config
 ├── install.sh                        # Installer for macOS/Linux
 ├── install.ps1                       # Installer for Windows
 ├── README.md
 ├── LICENSE
 └── .gitignore
+
+# Queue file location (created on install):
+~/.cursor/reflect-queue.json          # Global, never pollutes project repos
 ```
 
 ## Usage

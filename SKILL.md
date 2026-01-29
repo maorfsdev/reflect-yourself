@@ -33,4 +33,4 @@ When the user invokes these commands, read the corresponding file in `commands/`
 
 ## Queue Location
 
-Pending learnings: `.cursor/reflect-queue.json` (in project) or check skill folder.
+Pending learnings: `~/.cursor/reflect-queue.json` (global location, never pollutes project repos)

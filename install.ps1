@@ -1,74 +1,57 @@
 # reflect-yourself installer for Cursor (Windows PowerShell)
+# Installs to ~/.cursor/skills/ for global availability
 
 $ErrorActionPreference = "Stop"
 
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoUrl = "https://raw.githubusercontent.com/AshkanAhmady/reflect-yourself/main"
+$Dest = "$env:USERPROFILE\.cursor\skills-cursor\reflect-yourself"
 
+Write-Host ""
 Write-Host "reflect-yourself installer" -ForegroundColor Cyan
-Write-Host "=========================" -ForegroundColor Cyan
+Write-Host "==========================" -ForegroundColor Cyan
 Write-Host ""
 
-$CursorDir = "$env:USERPROFILE\.cursor"
+# Check if running from local clone or remote
+$ScriptDir = if ($MyInvocation.MyCommand.Path) { Split-Path -Parent $MyInvocation.MyCommand.Path } else { $null }
 
-Write-Host "Where would you like to install?"
-Write-Host ""
-Write-Host "1) Personal skill ($CursorDir\skills\reflect-yourself\)"
-Write-Host "   - Available in ALL your projects"
-Write-Host ""
-Write-Host "2) Current project (.cursor\)"
-Write-Host "   - Only for this project, can be committed to git"
-Write-Host ""
+# Create destination directories
+New-Item -ItemType Directory -Force -Path "$Dest\commands" | Out-Null
+New-Item -ItemType Directory -Force -Path "$Dest\rules" | Out-Null
 
-$choice = Read-Host "Choose [1/2]"
+if ($ScriptDir -and (Test-Path "$ScriptDir\SKILL.md")) {
+    # Local install - copy from cloned repo
+    Write-Host "Installing from local files..."
+    Copy-Item "$ScriptDir\SKILL.md" "$Dest\" -Force
+    Copy-Item "$ScriptDir\commands\*" "$Dest\commands\" -Force
+    Copy-Item "$ScriptDir\rules\*" "$Dest\rules\" -Force
+} else {
+    # Remote install - download from GitHub
+    Write-Host "Downloading from GitHub..."
+    Invoke-WebRequest -Uri "$RepoUrl/SKILL.md" -OutFile "$Dest\SKILL.md"
+    Invoke-WebRequest -Uri "$RepoUrl/commands/reflect-yourself.md" -OutFile "$Dest\commands\reflect-yourself.md"
+    Invoke-WebRequest -Uri "$RepoUrl/commands/reflect-yourself-skills.md" -OutFile "$Dest\commands\reflect-yourself-skills.md"
+    Invoke-WebRequest -Uri "$RepoUrl/commands/reflect-yourself-queue.md" -OutFile "$Dest\commands\reflect-yourself-queue.md"
+    Invoke-WebRequest -Uri "$RepoUrl/commands/reflect-yourself-skip.md" -OutFile "$Dest\commands\reflect-yourself-skip.md"
+    Invoke-WebRequest -Uri "$RepoUrl/rules/session-reflect.mdc" -OutFile "$Dest\rules\session-reflect.mdc"
+}
 
-switch ($choice) {
-    "1" {
-        $Dest = "$CursorDir\skills\reflect-yourself"
-        
-        New-Item -ItemType Directory -Force -Path "$Dest\commands" | Out-Null
-        New-Item -ItemType Directory -Force -Path "$Dest\rules" | Out-Null
-        
-        Copy-Item "$ScriptDir\SKILL.md" "$Dest\" -Force
-        Copy-Item "$ScriptDir\commands\*" "$Dest\commands\" -Force
-        Copy-Item "$ScriptDir\rules\*" "$Dest\rules\" -Force
-        Copy-Item "$ScriptDir\reflect-queue.json" "$Dest\" -Force
-        
-        Write-Host ""
-        Write-Host "Installed to $Dest" -ForegroundColor Green
-        Write-Host ""
-        Write-Host "The skill is now available in all your Cursor projects."
-    }
-    "2" {
-        if (-not (Test-Path ".cursor")) {
-            New-Item -ItemType Directory -Path ".cursor" | Out-Null
-        }
-        
-        New-Item -ItemType Directory -Force -Path ".cursor\commands" | Out-Null
-        New-Item -ItemType Directory -Force -Path ".cursor\rules" | Out-Null
-        
-        Copy-Item "$ScriptDir\commands\*" ".cursor\commands\" -Force
-        Copy-Item "$ScriptDir\rules\*" ".cursor\rules\" -Force
-        Copy-Item "$ScriptDir\reflect-queue.json" ".cursor\" -Force
-        
-        Write-Host ""
-        Write-Host "Installed to .cursor\" -ForegroundColor Green
-        Write-Host ""
-        Write-Host "Commands and rules are now available in this project."
-        Write-Host ""
-        Write-Host "Consider adding to .gitignore:"
-        Write-Host "  .cursor/reflect-queue.json"
-    }
-    default {
-        Write-Host "Invalid choice. Exiting." -ForegroundColor Red
-        exit 1
-    }
+# Create empty queue file if it doesn't exist
+$QueueFile = "$env:USERPROFILE\.cursor\reflect-queue.json"
+if (-not (Test-Path $QueueFile)) {
+    '{"version": 1, "learnings": []}' | Out-File -FilePath $QueueFile -Encoding utf8
+    Write-Host "Created queue file at $QueueFile"
 }
 
 Write-Host ""
-Write-Host "Usage:" -ForegroundColor Yellow
+Write-Host "Installed to $Dest" -ForegroundColor Green
+Write-Host ""
+Write-Host "The skill is now available in ALL your Cursor projects."
+Write-Host ""
+Write-Host "Commands:" -ForegroundColor Yellow
 Write-Host "  /reflect-yourself        - Capture learnings from session"
 Write-Host "  /reflect-yourself-skills - Discover skill patterns"
 Write-Host "  /reflect-yourself-queue  - View pending learnings"
 Write-Host "  /reflect-yourself-skip   - Clear the queue"
 Write-Host ""
-Write-Host "Run /reflect-yourself at the end of your session!"
+Write-Host "Run /reflect-yourself at the end of your sessions!"
+Write-Host ""

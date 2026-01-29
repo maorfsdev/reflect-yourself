@@ -1,0 +1,34 @@
+{
+  "name": "reflect-yourself",
+  "version": "1.0.0",
+  "description": "Self-learning system for Cursor that captures corrections and syncs them to skills and rules",
+  "keywords": [
+    "cursor",
+    "ai",
+    "self-learning",
+    "skills",
+    "rules",
+    "cursor-ide"
+  ],
+  "author": "AshkanAhmady",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AshkanAhmady/reflect-yourself.git"
+  },
+  "homepage": "https://github.com/AshkanAhmady/reflect-yourself#readme",
+  "bin": {
+    "reflect-yourself-install": "./bin/install.js"
+  },
+  "files": [
+    "bin/",
+    "commands/",
+    "rules/",
+    "SKILL.md",
+    "install.sh",
+    "install.ps1"
+  ],
+  "engines": {
+    "node": ">=14"
+  }
+}
