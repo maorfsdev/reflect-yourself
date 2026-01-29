@@ -1,3 +1,8 @@
+---
+name: /reflect-yourself-skip
+description: Discard all pending learnings without applying.
+---
+
 # /reflect-yourself-skip - Discard Pending Learnings
 
 Discard all queued learnings without applying them.

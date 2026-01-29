@@ -52,8 +52,8 @@ files.forEach(file => {
     const destPath = path.join(DEST_DIR, file.dest);
     
     if (fs.existsSync(srcPath)) {
-        // Inject version into SKILL.md description
-        if (file.src === 'SKILL.md') {
+        // Inject version into files with frontmatter descriptions
+        if (file.src === 'SKILL.md' || file.src.startsWith('commands/')) {
             let content = fs.readFileSync(srcPath, 'utf8');
             content = content.replace(
                 /^(description: .+?)(\.)?\s*$/m,

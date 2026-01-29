@@ -1,3 +1,8 @@
+---
+name: /reflect-yourself-skills
+description: Discover repeating patterns that could become reusable skills.
+---
+
 # /reflect-yourself-skills - Skill Discovery from Patterns
 
 Analyze session history to discover repeating patterns that could become reusable skills or commands.

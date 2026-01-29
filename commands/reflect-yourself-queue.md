@@ -1,3 +1,8 @@
+---
+name: /reflect-yourself-queue
+description: View pending learnings queue without processing.
+---
+
 # /reflect-yourself-queue - View Pending Learnings
 
 View the queue of captured learnings without processing them.

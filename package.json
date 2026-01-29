@@ -1,6 +1,6 @@
 {
   "name": "reflect-yourself",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Self-learning system for Cursor that captures corrections and syncs them to skills and rules",
   "keywords": [
     "cursor",
