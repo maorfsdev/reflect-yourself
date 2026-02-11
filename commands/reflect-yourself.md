@@ -1,9 +1,11 @@
 ---
 name: /reflect-yourself
-description: Capture learnings from session corrections and sync to skills/rules.
+description: Capture learnings from session corrections and sync to skills/rules (v1.1.0).
 ---
 
 # /reflect-yourself - Session Self-Learning System
+
+**Version:** 1.1.0
 
 A self-learning system for Cursor that captures corrections, discovers patterns, and syncs learnings to skills and rules.
 

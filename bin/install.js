@@ -57,9 +57,10 @@ files.forEach(file => {
         // Inject version into files with frontmatter descriptions (skip references)
         if ((file.src === 'SKILL.md' || file.src.startsWith('commands/')) && !file.src.startsWith('references/')) {
             let content = fs.readFileSync(srcPath, 'utf8');
+            // Ensure description ends with (vX.Y.Z). — add or replace existing version
             content = content.replace(
-                /^(description: .+?)(\.)?\s*$/m,
-                `$1 (v${VERSION}).`
+                /^(description: .+?)(\s*\(v\d+\.\d+\.\d+\))?(\.)?\s*$/m,
+                (_, desc, _v, dot) => `${desc} (v${VERSION})${dot || '.'}`
             );
             fs.writeFileSync(destPath, content);
         } else {
