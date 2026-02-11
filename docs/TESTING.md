@@ -2,6 +2,22 @@
 
 There is no automated test suite. Test by running the installer and then exercising the commands in Cursor with real (or staged) conversations.
 
+## Test without overwriting your global (stable) install
+
+If your changes are on a branch and you don't want to run `node bin/install.js` (that overwrites `~/.cursor/skills/reflect-yourself/` with the branch version):
+
+1. **Create a test project** (or use an existing throwaway folder).
+2. **Copy the branch's skill into that project's skills dir** (from reflect-yourself repo root, on your feature branch):
+   - **PowerShell (Windows):**  
+     `$d = "C:\path\to\YourTestProject\.cursor\skills\reflect-yourself"; New-Item -ItemType Directory -Force -Path $d | Out-Null; Copy-Item -Path SKILL.md,commands,rules,references -Destination $d -Recurse -Force`
+   - **Bash (macOS/Linux):**  
+     `mkdir -p /path/to/YourTestProject/.cursor/skills/reflect-yourself && cp -r SKILL.md commands rules references /path/to/YourTestProject/.cursor/skills/reflect-yourself/`
+   - Replace the path with your actual test project path.
+3. **Open that test project in Cursor.** Cursor will use the project's `.cursor/skills/reflect-yourself/`; your global `~/.cursor/skills/reflect-yourself/` is unchanged.
+4. Run `/reflect-yourself` (and other commands) in that project to verify the new behavior.
+
+When done testing, close the project or delete `.cursor/skills/reflect-yourself` from the test project. Your global install was never touched.
+
 ## 1. Test the installer
 
 From the repo root:
