@@ -1,6 +1,6 @@
 ---
 name: reflect-yourself
-description: Self-learning system that captures corrections, discovers workflow patterns, and syncs learnings to skills and rules. Use when ending a session, after corrections, or when the user wants to formalize learnings (v1.0.5).
+description: Self-learning system that captures corrections, discovers workflow patterns, and syncs learnings to skills and rules. Use when ending a session, after corrections, or when the user wants to formalize learnings (v1.1.0).
 ---
 
 # reflect-yourself
