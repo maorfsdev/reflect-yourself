@@ -13,22 +13,26 @@ View the queue of captured learnings without processing them.
 
 1. Read the queue file at `~/.cursor/reflect-queue.json` (global location)
 2. If the file doesn't exist or is empty, report "No pending learnings"
-3. Display learnings in a formatted table:
+3. Display learnings in a **compact card-style list** (no wide tables — they cause horizontal scroll):
 
 ```markdown
 ## Pending Learnings Queue
 
-| # | Date | Type | Learning | Confidence | Status |
-|---|------|------|----------|------------|--------|
-| 1 | Jan 29 | correction | "Use prepared statements" | 0.85 | pending |
-| 2 | Jan 28 | preference | "Prefer async/await over callbacks" | 0.80 | pending |
-
 **Total:** 2 pending learnings
 
-### Actions
-- Run `/reflect-yourself` to process and apply these learnings
-- Run `/reflect-yourself-skip` to discard all pending learnings
+---
+
+### 1. [correction] Use prepared statements
+**Date:** Jan 29 · **Confidence:** 0.85 · **Status:** pending
+
+---
+
+### 2. [preference] Prefer async/await over callbacks
+**Date:** Jan 28 · **Confidence:** 0.80 · **Status:** pending
+
+---
 ```
 
-4. If there are learnings with `status: "applied"`, they can be cleaned up
-5. Show age of oldest learning to encourage processing
+4. If there are learnings with `status: "applied"`, note that they can be cleaned up
+5. Show age of oldest learning to encourage processing (e.g. "Oldest: 3 days")
+6. **Ask Question:** When items exist, use the ask question tool: "Process queue now?" with options **Yes** (run `/reflect-yourself` to process) / **No** / **Discard all** (run `/reflect-yourself-skip`). Do not rely only on the user typing a phrase.

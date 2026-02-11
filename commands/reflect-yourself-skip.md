@@ -12,26 +12,32 @@ Discard all queued learnings without applying them.
 ## Instructions for Agent
 
 1. Read the queue file at `~/.cursor/reflect-queue.json` (global location)
-2. Show what will be discarded:
+2. Show what will be discarded in a **compact card-style list** (no wide tables):
 
 ```markdown
 ## Discarding Learnings
 
-The following learnings will be permanently discarded:
+The following will be permanently discarded:
 
-| # | Learning | Captured |
-|---|----------|----------|
-| 1 | "Use prepared statements" | Jan 29 |
-| 2 | "Prefer async/await over callbacks" | Jan 28 |
+---
 
-**Are you sure?** This cannot be undone.
+### 1. "Use prepared statements"
+**Captured:** Jan 29 · **Type:** correction
+
+---
+
+### 2. "Prefer async/await over callbacks"
+**Captured:** Jan 28 · **Type:** preference
+
+---
 ```
 
-3. If user confirms, clear the queue:
+3. **Ask Question:** Use the ask question tool for confirmation. Present: **Yes, discard all** / **No, keep queue**. Do not proceed to clear the queue until the user confirms via the chosen option (or an explicit typed "yes" / "confirm").
+4. If user confirms, clear the queue:
    - Set `learnings` array to `[]`
    - Or delete the file entirely
+5. Confirm:
 
-4. Confirm:
 ```markdown
 ✅ Queue cleared. 2 learnings discarded.
 ```

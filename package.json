@@ -24,6 +24,7 @@
     "bin/",
     "commands/",
     "rules/",
+    "references/",
     "SKILL.md",
     "install.sh",
     "install.ps1"

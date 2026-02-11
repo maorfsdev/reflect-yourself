@@ -26,7 +26,8 @@ console.log('');
 const dirs = [
     DEST_DIR,
     path.join(DEST_DIR, 'commands'),
-    path.join(DEST_DIR, 'rules')
+    path.join(DEST_DIR, 'rules'),
+    path.join(DEST_DIR, 'references')
 ];
 
 dirs.forEach(dir => {
@@ -42,7 +43,8 @@ const files = [
     { src: 'commands/reflect-yourself-skills.md', dest: 'commands/reflect-yourself-skills.md' },
     { src: 'commands/reflect-yourself-queue.md', dest: 'commands/reflect-yourself-queue.md' },
     { src: 'commands/reflect-yourself-skip.md', dest: 'commands/reflect-yourself-skip.md' },
-    { src: 'rules/session-reflect.mdc', dest: 'rules/session-reflect.mdc' }
+    { src: 'rules/session-reflect.mdc', dest: 'rules/session-reflect.mdc' },
+    { src: 'references/ONBOARDING.md', dest: 'references/ONBOARDING.md' }
 ];
 
 console.log('Installing files...');
@@ -52,8 +54,8 @@ files.forEach(file => {
     const destPath = path.join(DEST_DIR, file.dest);
     
     if (fs.existsSync(srcPath)) {
-        // Inject version into files with frontmatter descriptions
-        if (file.src === 'SKILL.md' || file.src.startsWith('commands/')) {
+        // Inject version into files with frontmatter descriptions (skip references)
+        if ((file.src === 'SKILL.md' || file.src.startsWith('commands/')) && !file.src.startsWith('references/')) {
             let content = fs.readFileSync(srcPath, 'utf8');
             content = content.replace(
                 /^(description: .+?)(\.)?\s*$/m,
@@ -90,3 +92,23 @@ console.log('Run /reflect-yourself at the end of your sessions!');
 console.log('');
 console.log('To update later, run: npx reflect-yourself@latest');
 console.log('');
+
+// Non-blocking check for newer version on registry
+const https = require('https');
+https.get('https://registry.npmjs.org/reflect-yourself/latest', { timeout: 3000 }, (res) => {
+    let data = '';
+    res.on('data', (ch) => { data += ch; });
+    res.on('end', () => {
+        try {
+            const latest = JSON.parse(data).version;
+            if (latest && latest !== VERSION) {
+                const [a, b, c] = VERSION.split('.').map(Number);
+                const [x, y, z] = latest.split('.').map(Number);
+                if (x > a || (x === a && y > b) || (x === a && y === b && z > c)) {
+                    console.log(`A newer version (${latest}) is available. Run: npx reflect-yourself@latest`);
+                    console.log('');
+                }
+            }
+        } catch (_) { /* ignore */ }
+    });
+}).on('error', () => { /* ignore */ });

@@ -110,13 +110,14 @@ Analyzed current session. Found these patterns:
 
 ## Actions
 
-For each candidate, I can:
-- **Generate** - Create the skill with full SKILL.md
+Use the **ask question tool** when possible to capture the user's choice instead of relying on typed phrases. Offer:
+
+- **Generate** - Create the skill with full SKILL.md (follow-up: which numbers? e.g. 1, 1 and 2, all)
 - **Draft** - Create a skeleton to fill in later
 - **Skip** - Not useful enough to formalize
-- **Merge** - Combine with existing skill
+- **Merge** - Combine with existing skill (follow-up: which candidate and which existing skill?)
 
-Which skills should I generate? (e.g., "1" or "all" or "1,2 as drafts")
+Fallback: still accept typed replies (e.g. "1", "all", "1,2 as drafts").
 ```
 
 ### Step 5: Generate Skills
@@ -179,12 +180,11 @@ description: [Third-person description with trigger terms. Use when...]
 
 ## Cross-Session Analysis
 
-For deeper pattern analysis across multiple sessions, ask the user:
+Use the **ask question tool** when relevant: "Analyze previous conversations?" with options **Yes** / **No** (or "Not now"). If the user chooses Yes, then:
 
-> "Would you like me to analyze patterns from previous conversations? 
-> I can look at your existing skills and recent work to find:
+> "I can look at your existing skills and recent work to find:
 > - Skills that need updating
-> - Patterns that keep recurring  
+> - Patterns that keep recurring
 > - Knowledge that should be formalized"
 
 If approved, review:

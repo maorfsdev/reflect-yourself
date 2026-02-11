@@ -166,8 +166,8 @@ reflect-yourself/
 Run `/reflect-yourself` at the end of productive sessions:
 
 1. The agent analyzes the conversation for corrections and patterns
-2. Presents learnings in a table with confidence scores
-3. You approve, edit, skip, or redirect each learning
+2. Presents learnings in a summary and cards (with confidence and destination)
+3. You choose an action (apply / edit / skip / redirect) via prompt or reply
 4. Approved learnings are applied to the appropriate destination
 
 ### Skill Discovery
@@ -204,6 +204,7 @@ The `session-reflect.mdc` rule provides gentle reminders:
 - **Scoped writes** - Only writes to `.cursor/` directories (project or personal)
 - **Backup shown** - Before modifying existing skills, you'll see the current content
 - **Undo via git** - All changes are in your repo, use `git checkout` to restore if needed
+- **Trust & import hygiene** - Only install skills from sources you trust. Skills are loaded into the agent context. Prefer official or well-known repos; inspect `SKILL.md` and command/rules files before installing. After installing this skill, you can review `~/.cursor/skills/reflect-yourself/`. The installer copies files only; it does not execute skill content.
 
 ## Tips
 
@@ -222,12 +223,26 @@ The `session-reflect.mdc` rule provides gentle reminders:
 
 Pull requests welcome! Please:
 1. Keep commands concise and focused
-2. Test with real Cursor sessions
+2. Test with real Cursor sessions (see [Testing](https://github.com/maorfsdev/reflect-yourself/blob/main/docs/TESTING.md) in the repo; not part of the npm package)
 3. Update README for new features
 
 ## License
 
 MIT - See [LICENSE](LICENSE)
+
+## Changelog-aligned opportunities
+
+These Cursor features can make reflect-yourself more effective:
+
+| Feature | How to use |
+|--------|------------|
+| **Clarification questions (Q&A tool)** | The commands instruct the agent to use the ask question tool for Apply/Skip/Process queue/Update so you can choose an option instead of typing phrases. |
+| **Plan mode** | For `/reflect-yourself-skills`, use Plan mode when analyzing many sessions or proposing many skill candidates. |
+| **Ask mode** | Use Ask mode to explore what would be captured without applying learnings. |
+| **Subagents** | Optional: complex reflection or cross-session analysis could use a research subagent (future). |
+| **MCP** | The queue could eventually be exposed via MCP for tooling (low priority). |
+
+New users can also read `references/ONBOARDING.md` (if present) for a short overview.
 
 ## Credits
 
