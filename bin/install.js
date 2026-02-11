@@ -10,6 +10,7 @@ const path = require('path');
 const os = require('os');
 
 const DEST_DIR = path.join(os.homedir(), '.cursor', 'skills', 'reflect-yourself');
+const COMMANDS_DIR = path.join(os.homedir(), '.cursor', 'commands');
 const QUEUE_FILE = path.join(os.homedir(), '.cursor', 'reflect-queue.json');
 
 // Get the package root (parent of bin/)
@@ -25,6 +26,7 @@ console.log('');
 // Create destination directories
 const dirs = [
     DEST_DIR,
+    COMMANDS_DIR,
     path.join(DEST_DIR, 'commands'),
     path.join(DEST_DIR, 'rules'),
     path.join(DEST_DIR, 'references')
@@ -63,6 +65,10 @@ files.forEach(file => {
                 (_, desc, _v, dot) => `${desc} (v${VERSION})${dot || '.'}`
             );
             fs.writeFileSync(destPath, content);
+            if (file.src.startsWith('commands/')) {
+                const flatPath = path.join(COMMANDS_DIR, path.basename(file.src));
+                fs.writeFileSync(flatPath, content);
+            }
         } else {
             fs.copyFileSync(srcPath, destPath);
         }
@@ -80,6 +86,8 @@ if (!fs.existsSync(QUEUE_FILE)) {
 
 console.log('');
 console.log(`Installed to ${DEST_DIR}`);
+console.log(`Commands also copied to ${COMMANDS_DIR} (v${VERSION} in description and body).`);
+console.log(`→ Command preview file: ${path.join(COMMANDS_DIR, 'reflect-yourself.md')}`);
 console.log('');
 console.log('The skill is now available in ALL your Cursor projects.');
 console.log('');
