@@ -1,22 +1,17 @@
 # Testing reflect-yourself
 
-There is no automated test suite. Test by running the installer and then exercising the commands in Cursor with real (or staged) conversations.
+There is no automated test suite. Test by running the installer and then trying the commands in Cursor.
 
-## Test without overwriting your global (stable) install
+## Simplest way to test
 
-If your changes are on a branch and you don't want to run `node bin/install.js` (that overwrites `~/.cursor/skills/reflect-yourself/` with the branch version):
+1. **Use the branch:** In this repo, switch to the feature branch (e.g. `improve/ux-security-org`). If you use a worktree, the branch is there; in the main clone you can’t check out the same branch while the worktree has it, so run the steps below from the worktree.
+2. **Install:** From the repo root (on that branch), run `node bin/install.js`. That overwrites your global `~/.cursor/skills/reflect-yourself/` with this version.
+3. **Test in Cursor:** Open any project, run `/reflect-yourself` (and queue/skip/skills as needed). Check summary-first, cards, and Ask Question prompts.
+4. **Restore stable:** When done, run `npx reflect-yourself@latest` to reinstall the published version. Your global install is back to stable.
 
-1. **Create a test project** (or use an existing throwaway folder).
-2. **Copy the branch's skill into that project's skills dir** (from reflect-yourself repo root, on your feature branch):
-   - **PowerShell (Windows):**  
-     `$d = "C:\path\to\YourTestProject\.cursor\skills\reflect-yourself"; New-Item -ItemType Directory -Force -Path $d | Out-Null; Copy-Item -Path SKILL.md,commands,rules,references -Destination $d -Recurse -Force`
-   - **Bash (macOS/Linux):**  
-     `mkdir -p /path/to/YourTestProject/.cursor/skills/reflect-yourself && cp -r SKILL.md commands rules references /path/to/YourTestProject/.cursor/skills/reflect-yourself/`
-   - Replace the path with your actual test project path.
-3. **Open that test project in Cursor.** Cursor will use the project's `.cursor/skills/reflect-yourself/`; your global `~/.cursor/skills/reflect-yourself/` is unchanged.
-4. Run `/reflect-yourself` (and other commands) in that project to verify the new behavior.
+## Optional: test without overwriting global
 
-When done testing, close the project or delete `.cursor/skills/reflect-yourself` from the test project. Your global install was never touched.
+Use a **test project**: create a folder, then copy the branch’s skill into that project’s `.cursor/skills/reflect-yourself/` (copy `SKILL.md`, `commands/`, `rules/`, `references/` from the repo). Open that folder in Cursor; it will use the project skill and leave `~/.cursor/skills/reflect-yourself/` unchanged. When done, delete `.cursor/skills/reflect-yourself` from the test project.
 
 ## 1. Test the installer
 
