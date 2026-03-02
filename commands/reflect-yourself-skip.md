@@ -32,7 +32,7 @@ The following will be permanently discarded:
 ---
 ```
 
-3. **Ask Question:** Use the ask question tool for confirmation. Present: **Yes, discard all** / **No, keep queue**. Do not proceed to clear the queue until the user confirms via the chosen option (or an explicit typed "yes" / "confirm").
+3. **Ask questions (Cursor agent tool):** Use the **Ask questions** tool (message-question; Cursor docs → Agent overview → Tools) for confirmation. Present: **Yes, discard all** / **No, keep queue**. If the tool is unavailable, present in text and wait for reply (e.g. yes / no). Do not proceed to clear the queue until the user confirms.
 4. If user confirms, clear the queue:
    - Set `learnings` array to `[]`
    - Or delete the file entirely

@@ -1,11 +1,11 @@
 ---
 name: /reflect-yourself
-description: Capture learnings from session corrections and sync to skills/rules (v1.1.0).
+description: Capture learnings from session corrections and sync to skills/rules (v1.1.3).
 ---
 
 # /reflect-yourself - Session Self-Learning System
 
-**Version:** 1.1.0
+**Version:** 1.1.3
 
 A self-learning system for Cursor that captures corrections, discovers patterns, and syncs learnings to skills and rules.
 
@@ -26,9 +26,9 @@ A self-learning system for Cursor that captures corrections, discovers patterns,
 
 When this command is invoked, perform the following steps:
 
-### Optional: Update check
+### Optional: Version check (at most once per day)
 
-At start (non-intrusive): run `npm view reflect-yourself version` and compare to the installed version (e.g. from skill description `(vX.Y.Z)`). If a newer version exists, briefly say so and use the **ask question tool** with options: **Update now** (run `npx reflect-yourself@latest`) / **Later**. Only on main commands; do not block the flow.
+Only if appropriate (e.g. user has not seen a check recently, or roughly once per day). Run `npm view reflect-yourself version` and compare to the installed version (e.g. from this command's description). If you run it, output one line (e.g. installed vX.Y.Z, npm vX.Y.Z — up to date). If a newer npm version exists, use the **Ask questions** tool (Cursor agent tool) to offer **Update now** / **Later**. Do not run this every time; do not block the flow.
 
 ### Phase 1: Session Analysis
 
@@ -145,7 +145,7 @@ Does this improve an existing skill?
 
 #### Summary-first header
 
-Before the cards, always show a one-line summary:
+Before the cards, always show a one-line summary. **The count must match the number of cards you show** (count every learning card, including reinforcements that need no edit — e.g. "2 learnings" if you show 2 cards).
 
 ```markdown
 ## Learnings Captured
@@ -157,47 +157,27 @@ Before the cards, always show a one-line summary:
 
 Adjust counts and destination breakdown to match the session.
 
-#### Card format (compact, glanceable)
+#### Card format (plain-text, export-safe)
 
-Use compact cards with optional icon anchors (one per line is fine). Keep metadata on one short line; if the destination is long, break into two lines with a label prefix.
+Output may be exported to markdown or viewed in transcripts where HTML does not render. **Do not use `<details>` or `<summary>`** — they show as raw markup. Use a short "Why" line and optional blockquote. Icons or emojis are fine as visual anchors.
 
-**Compact example:**
-
-```markdown
-### 1. [correction] Always run tests before committing
-**Confidence:** 0.85 | **Destination:** personal-skill: `git-workflow`
-
-<details><summary>Why this was captured</summary>
-
-During the session, the user explicitly said "no, don't commit without running tests first" after the agent attempted to commit directly. This indicates a strong workflow preference that should be remembered across sessions.
-
-</details>
-
----
-
-### 2. [preference] Use TypeScript strict mode in this project
-**Confidence:** 0.80 | **Destination:** project-rule: `typescript.mdc`
-
-<details><summary>Why this was captured</summary>
-
-User corrected loose typing with "always use strict mode here" — project-specific, apply to all TypeScript files in this codebase.
-
-</details>
-
----
-```
-
-**Alternative (no collapsible):** If `<details>` is not desired, use a short "Why" line plus optional blockquote:
+**Required format:**
 
 ```markdown
 ### 1. [correction] Always run tests before committing
 **Confidence:** 0.85 | **Destination:** personal-skill: `git-workflow`
 **Why:** User said "don't commit without running tests first" after agent attempted direct commit.
 
-> Full reasoning: Strong workflow preference; reusable across sessions.
-```
+> Strong workflow preference; reusable across sessions.
 
-Use simple icon/emoji markers as visual anchors if helpful (e.g. one per card or per section). Do not use wide emoji blocks or content that forces horizontal scroll.
+---
+
+### 2. [preference] Use TypeScript strict mode in this project
+**Confidence:** 0.80 | **Destination:** project-rule: `typescript.mdc`
+**Why:** User corrected loose typing with "always use strict mode here" — project-specific.
+
+---
+```
 
 #### Discarded section
 
@@ -207,35 +187,46 @@ Use simple icon/emoji markers as visual anchors if helpful (e.g. one per card or
 - "The API is slow today" — observation, not actionable
 ```
 
-#### Action capture via Ask Question
+#### Action capture — require explicit user input
 
-**Do not rely on copy-paste phrases.** After presenting learnings, use the **ask question tool** to present structured choices so the user can click an option. Offer:
+After presenting learnings, **you must get explicit user input** before applying or discarding. **Never auto-apply** (e.g. do not apply just because the Ask questions tool wasn't available or because the user "typically" wants to apply).
 
-- **Apply all** — Accept and add all to their destinations
-- **Apply selected** — Follow up: "Which numbers?" (e.g. 1,2 or 1,3,5)
-- **Skip all** — Discard all learnings this run
-- **Partial** — Let me specify / edit first
-- **Other** — Free-form (then parse reply as usual)
+Use the Cursor agent tool **Ask questions** (message-question: "Ask clarifying questions during a task. Your answer is incorporated as soon as it arrives." — see Cursor docs → Agent overview → Tools). When available, use it to offer: **Apply all** / **Apply selected** / **Skip all** / **Partial** / **Other**.
 
-Fallback: still accept typed replies (e.g. "1,2,3", "all", "skip all") for users who prefer typing.
+- **When Ask questions tool is available:** Use it to present those options so the user can choose.
+- **When Ask questions tool is not available:** Present the choice in text and **wait for the user's reply**. Use this prompt format:
+
+```text
+Reply with:
+  -apply   — apply all learnings
+  -discard — discard all
+```
+
+Accept as apply: `apply`, `-apply`, `apply all`, `all`, `1` (if one learning). Accept as discard: `discard`, `-discard`, `skip`, `skip all`. Do not proceed to Phase 6 until the user replies with one of these (or equivalent). If the user does not reply, do not apply.
 
 #### Format guidelines
 
 **DO:**
-- Summary-first line (counts + destination breakdown)
+- Summary-first line (counts + destination breakdown); summary count = number of cards shown
 - Numbered headers with type badge: `### 1. [correction] Title`
 - Single short metadata line; break to two lines only if needed
-- "Why this was captured" via `<details>` or one short line + optional blockquote
+- "Why" as a short line + optional blockquote (plain text only)
 - Horizontal rules between cards
-- Ask Question for action choice when possible
+- Use the **Ask questions** agent tool when available for apply/discard choice; otherwise use -apply / -discard text prompt and wait for reply
 
 **DON'T:**
+- Auto-apply when the Ask questions tool is missing or for any other reason — always wait for user reply
+
+**DON'T:**
+- Use `<details>`, `<summary>`, or any HTML (shows as raw markup in exports/transcripts)
 - Use tables for learnings (causes horizontal scroll)
 - Put mermaid diagrams in command output (README only if needed)
 - Write very long single-line text (wrap naturally)
 - Skip the "Why" explanation
 
 ### Phase 6: Apply Learnings
+
+**Apply only after the user explicitly chose apply** (e.g. replied "apply", "-apply", "apply all"). Never apply before that.
 
 **Path Safety:** Only write to these locations:
 - `.cursor/skills/` (project)
@@ -268,7 +259,7 @@ For approved learnings:
 
 ### Phase 7: Summary Report
 
-After applying, provide a glanceable summary with optional icon anchors (e.g. ✅ ⏭️). No wide tables.
+After applying, provide a glanceable summary. No HTML (plain text only). Optional icon/emoji anchors (e.g. ✅ ⏭️) are fine. No wide tables.
 
 ```markdown
 ## Reflection Complete

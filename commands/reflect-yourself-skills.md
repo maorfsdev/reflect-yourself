@@ -110,7 +110,7 @@ Analyzed current session. Found these patterns:
 
 ## Actions
 
-Use the **ask question tool** when possible to capture the user's choice instead of relying on typed phrases. Offer:
+Use the Cursor agent tool **Ask questions** (message-question; Cursor docs → Agent overview → Tools) when available to capture the user's choice. Offer:
 
 - **Generate** - Create the skill with full SKILL.md (follow-up: which numbers? e.g. 1, 1 and 2, all)
 - **Draft** - Create a skeleton to fill in later
@@ -180,7 +180,7 @@ description: [Third-person description with trigger terms. Use when...]
 
 ## Cross-Session Analysis
 
-Use the **ask question tool** when relevant: "Analyze previous conversations?" with options **Yes** / **No** (or "Not now"). If the user chooses Yes, then:
+Use the **Ask questions** tool when relevant: "Analyze previous conversations?" with options **Yes** / **No** (or "Not now"). If the user chooses Yes, then:
 
 > "I can look at your existing skills and recent work to find:
 > - Skills that need updating

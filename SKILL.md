@@ -1,6 +1,6 @@
 ---
 name: reflect-yourself
-description: Self-learning system that captures corrections, discovers workflow patterns, and syncs learnings to skills and rules. Use when ending a session, after corrections, or when the user wants to formalize learnings (v1.1.0).
+description: Self-learning system that captures corrections, discovers workflow patterns, and syncs learnings to skills and rules. Use when ending a session, after corrections, or when the user wants to formalize learnings (v1.1.3).
 ---
 
 # reflect-yourself
@@ -13,7 +13,7 @@ When invoked:
 
 1. **Analyze** session (and optionally ask clarifying questions if scope is unclear)
 2. **Present** learnings for review (summary-first, then cards; see command file)
-3. **Capture action** via the ask question tool when possible (Apply all / Apply selected / Skip all / Partial / Other) instead of relying on copy-paste phrases
+3. **Capture action** via the Cursor agent tool **Ask questions** (message-question) when possible — offer Apply all / Apply selected / Skip all / Partial / Other; see Cursor docs → Agent overview → Tools
 4. **Apply** only after explicit user approval (via Q&A or typed reply)
 
 ## Inputs

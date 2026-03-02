@@ -35,4 +35,4 @@ View the queue of captured learnings without processing them.
 
 4. If there are learnings with `status: "applied"`, note that they can be cleaned up
 5. Show age of oldest learning to encourage processing (e.g. "Oldest: 3 days")
-6. **Ask Question:** When items exist, use the ask question tool: "Process queue now?" with options **Yes** (run `/reflect-yourself` to process) / **No** / **Discard all** (run `/reflect-yourself-skip`). Do not rely only on the user typing a phrase.
+6. **Ask questions (Cursor agent tool):** When items exist, use the **Ask questions** tool (message-question; Cursor docs → Agent overview → Tools): "Process queue now?" with options **Yes** (run `/reflect-yourself` to process) / **No** / **Discard all** (run `/reflect-yourself-skip`). If the tool is unavailable, present the options in text and wait for reply (e.g. yes / no / discard). Do not proceed without explicit user choice.

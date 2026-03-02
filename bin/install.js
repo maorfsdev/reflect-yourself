@@ -68,11 +68,14 @@ files.forEach(file => {
             if (file.src.startsWith('commands/')) {
                 const flatPath = path.join(COMMANDS_DIR, path.basename(file.src));
                 fs.writeFileSync(flatPath, content);
+                console.log(`  ✓ ${file.dest} → also ${flatPath}`);
+            } else {
+                console.log(`  ✓ ${file.dest}`);
             }
         } else {
             fs.copyFileSync(srcPath, destPath);
+            console.log(`  ✓ ${file.dest}`);
         }
-        console.log(`  ✓ ${file.dest}`);
     } else {
         console.error(`  ✗ ${file.src} not found`);
     }
@@ -86,8 +89,10 @@ if (!fs.existsSync(QUEUE_FILE)) {
 
 console.log('');
 console.log(`Installed to ${DEST_DIR}`);
-console.log(`Commands also copied to ${COMMANDS_DIR} (v${VERSION} in description and body).`);
-console.log(`→ Command preview file: ${path.join(COMMANDS_DIR, 'reflect-yourself.md')}`);
+console.log(`Commands overwritten in ${COMMANDS_DIR} (v${VERSION}).`);
+console.log(`  → Main command: ${path.join(COMMANDS_DIR, 'reflect-yourself.md')}`);
+console.log('');
+console.log('All listed files were overwritten. If Cursor still shows old command content, restart Cursor or open the command file above to confirm.');
 console.log('');
 console.log('The skill is now available in ALL your Cursor projects.');
 console.log('');
