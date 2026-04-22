@@ -1,20 +1,30 @@
 ---
 name: reflect-yourself
-description: Self-learning system that captures corrections, discovers workflow patterns, and syncs learnings to skills and rules. Use when ending a session, after corrections, or when the user wants to formalize learnings (v1.1.3).
+description: "Records user corrections and feedback from the current session, writes them as updated skill files or cursor rules, and queues unresolved learnings for later. Use when the user says 'remember this', 'save what you learned', 'update my preferences', 'end of session review', or after repeated corrections that should become persistent rules."
 ---
 
 # reflect-yourself
 
-A self-learning system for Cursor that captures corrections and syncs them to the right place.
+A self-learning system for Cursor that records corrections from a session and writes them to skill files or cursor rules.
 
 ## Workflow
 
 When invoked:
 
-1. **Analyze** session (and optionally ask clarifying questions if scope is unclear)
-2. **Present** learnings for review (summary-first, then cards; see command file)
+1. **Analyze** session for corrections, repeated patterns, and preference signals (optionally ask clarifying questions if scope is unclear)
+2. **Present** learnings for review — summary first, then individual cards (see command file for card format)
 3. **Capture action** via the Cursor agent tool **Ask questions** (message-question) when possible — offer Apply all / Apply selected / Skip all / Partial / Other; see Cursor docs → Agent overview → Tools
 4. **Apply** only after explicit user approval (via Q&A or typed reply)
+5. **Verify** each written file parses correctly and show a diff summary so the user can confirm the result
+
+## Example Learning Card
+
+```
+📝 Learning: Prefer named exports over default exports
+   Source: User corrected default export → named export (3 times this session)
+   Target: .cursor/rules/export-style.mdc
+   Confidence: HIGH
+```
 
 ## Inputs
 
@@ -53,9 +63,7 @@ Pending learnings: `~/.cursor/reflect-queue.json` (global location, never pollut
 
 ## Security
 
-- **Trust model:** Only install skills from sources you trust. Skills are loaded into the agent context and can influence behavior.
-- **Import hygiene:** Prefer official or well-known repos; inspect `SKILL.md` and command/rules files before installing. Be wary of skills that instruct the agent to run arbitrary code or exfiltrate data.
-- **This skill:** Only instructs the agent to write to `.cursor/skills/`, `.cursor/rules/`, and `~/.cursor/skills/`. The installer copies files only; it does not execute skill content. After install, review `~/.cursor/skills/reflect-yourself/` if you want to verify contents.
+This skill only writes to `.cursor/skills/`, `.cursor/rules/`, and `~/.cursor/skills/`. The installer copies files only; it does not execute skill content.
 
 ## Update check
 
